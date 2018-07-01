@@ -10,11 +10,21 @@ extern crate user32;
 use std::ptr;
 
 fn main() {
-    flash_windows_cmd_prompt();
+    notify();
+}
+
+#[cfg(unix)]
+fn notify() {
+    println!("todo");
+}
+
+#[cfg(macos)]
+fn notify() {
+    println!("todo");
 }
 
 #[cfg(windows)]
-fn flash_windows_cmd_prompt() {
+fn notify() {
     // https://docs.microsoft.com/en-us/windows/desktop/api/winuser/ns-winuser-flashwinfo
     const FLASH_COUNT: u32 = 3;
     const DEFAULT_TIMEOUT: u32 = 0;
