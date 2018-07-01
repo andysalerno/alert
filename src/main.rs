@@ -10,39 +10,35 @@ extern crate user32;
 use std::ptr;
 
 fn main() {
-    println!("Hello, world!");
-    std::thread::sleep(std::time::Duration::from_secs(3));
     flash_windows_cmd_prompt();
-    println!("done.");
 }
 
 #[cfg(windows)]
 fn flash_windows_cmd_prompt() {
+    // https://docs.microsoft.com/en-us/windows/desktop/api/winuser/ns-winuser-flashwinfo
+    const FLASH_COUNT: u32 = 3;
+    const DEFAULT_TIMEOUT: u32 = 0;
+    const FLASH_UNTIL_FOCUSED: u32 = 0xC;
+
     use winapi::winuser::FLASHWINFO;
 
     let window = unsafe { kernel32::GetConsoleWindow() };
 
     if window == ptr::null_mut() {
-        panic!("couldn't find windows console window");
+        return;
     }
 
-    let mut x = FLASHWINFO {
+    let mut flash_info = FLASHWINFO {
         hwnd: window,
         cbSize: std::mem::size_of::<FLASHWINFO>() as u32,
-
-        dwFlags: 0xC,
-
-        // rate at which to flash window, in ms
-        // if 0, uses the OS default
-        dwTimeout: 0,
-
-        // count of flashes to perform
-        uCount: 3,
+        dwFlags: FLASH_UNTIL_FOCUSED,
+        dwTimeout: DEFAULT_TIMEOUT,
+        uCount: FLASH_COUNT,
     };
 
-    let x_ptr = &mut x as *mut FLASHWINFO;
+    let flash_info_ptr = &mut flash_info as *mut FLASHWINFO;
 
     unsafe {
-        user32::FlashWindowEx(x_ptr);
+        user32::FlashWindowEx(flash_info_ptr);
     }
 }
