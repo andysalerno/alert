@@ -1,5 +1,5 @@
 [[package]]
-name = "alldone"
+name = "alert"
 version = "0.1.0"
 dependencies = [
  "kernel32-sys 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)",
