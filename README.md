@@ -10,5 +10,5 @@ On Windows, this is accomplished by calling into the WinApi to get the currently
 
 On MacOS, Alert is simply a glorified shell script, because MacOS by default jumps the Terminal icon when it receives the [BEL character](https://en.wikipedia.org/wiki/Bell_character). The Alert executable invokes the command `tput bel` to do this.
 
-Example on MacOS: {todo image}
-![](/images/alert_example_macos.gif)
+Example on MacOS:
+![](alert_example_macos.gif)
